@@ -157,7 +157,7 @@ export function registerBabel(babelCore){
 }
 export function getRelativePath(from, to){
   let relativePath = path.relative(path.dirname(from), to);
-  if (relativePath[0] !== '.') {
+  if (!/^\.+[\/\\]/.test(relativePath)) {
     relativePath = '.' + path.sep + relativePath;
   }
   return relativePath;
