@@ -1,27 +1,27 @@
-#babel-plugin-transform-helper
+# babel-plugin-transform-helper
 
 Babel transforms some awesome ES6 features to ES5 with extra code, such as Class,JSX. This plugin makes all generated extra codes to one module which significantly reduces the bundle code size.
 
-##Install
+## Install
 	
 	npm install babel-plugin-transform-helper --save-dev
 	
-##Usage
-###.babelrc
+## Usage
+### .babelrc
 	
 	{
 		...
 		"plugins":["babel-plugin-transform-helper"]
 	}
 	
-###code
+### code
 
 	babel.transform(code,{
 		...
 		plugins:["babel-plugin-transform-helper"]
 	})
 	
-##Options
+## Options
 You can specify the helper bundle file path by `helperFilename` property.
 
 	babel.transform(code,{
@@ -34,8 +34,9 @@ You can specify the helper bundle file path by `helperFilename` property.
 		]
 	})
 	
-##How it work
+## How it work
 This plugin write all generated helper code to one module and the original codes require the module instead of calling from local.Let's support we have two class file.
+
 ````javascript
 	//Point.js
 	export default class Point extends Array{
@@ -64,6 +65,7 @@ This plugin write all generated helper code to one module and the original codes
 ````
 
 When transfers ES6 class,import,typeof ... to ES5, babel add helper code in each original file, the `Point.js` will be transfered to
+
 ````javascript
 	var _createClass =//..some code
 
@@ -91,6 +93,7 @@ When transfers ES6 class,import,typeof ... to ES5, babel add helper code in each
 ````
 
 If every file adds these same code the size of bundle file used in browser can be extremely larger than the original source file. The helper codes are the same in every file,so we can group them in a moudle and require the module instead of call it from local, which make the `Point.js` like below.
+
 ````js	
 	var Point = function (_Array) {
 		require("../../tempHelper.js").inherits(Point, _Array);
